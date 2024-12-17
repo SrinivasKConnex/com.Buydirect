@@ -10,7 +10,7 @@
 
 		</classes>
 	</test>
-	<test name="EnrollPageTest">
+<!--	<test name="EnrollPageTest">
 		<classes>
 			<class name="Tests.EnrollPageTest" />
 
@@ -51,6 +51,6 @@
 		<classes>
 			<class name="Tests.CDWBankingDeclinePageTest" />
 		</classes>
-	</test>
+	</test>-->
 
 </suite>

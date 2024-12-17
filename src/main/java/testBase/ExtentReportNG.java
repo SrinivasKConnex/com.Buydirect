@@ -22,11 +22,10 @@ public class ExtentReportNG {
 	public static ThreadLocal<ExtentTest> childTest = new ThreadLocal<>();
 
 	public static ExtentReports setupExtentReport(ISuite context) throws Exception {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
-		Date date = new Date();
-		String actualDate = format.format(date);
-		String reportPath = System.getProperty("user.dir") + "/Reports/TestReport/" + context.getName()
-				+ "_ExecutionReport_" + actualDate + ".html";
+		//SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH-mm-ss");
+		//Date date = new Date();
+		//String actualDate = format.format(date);
+		String reportPath = System.getProperty("user.dir") + "/Reports/TestReport/index.html";
 
 		ExtentSparkReporter sparkReport = new ExtentSparkReporter(reportPath);
 
