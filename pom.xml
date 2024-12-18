@@ -39,14 +39,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0</version>
-				<configuration>
-					<systemPropertyVariables>
-						<log.directory>${project.basedir}/Output/${maven.build.timestamp}/Logs/</log.directory>
-					</systemPropertyVariables>
-					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-				</configuration>
+
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -149,7 +142,8 @@
 							<version>3.2.5</version>
 							<configuration>
 								<suiteXmlFiles>
-									<suiteXmlFile>TestSuite/testng.xml</suiteXmlFile>
+									<suiteXmlFile>
+										TestSuite/ExecutableTest/SmokeTest.xml</suiteXmlFile>
 								</suiteXmlFiles>
 							</configuration>
 						</plugin>
@@ -158,5 +152,5 @@
 
 			</build>
 		</profile>
-		</profiles>
+	</profiles>
 </project>

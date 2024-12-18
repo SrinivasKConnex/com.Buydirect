@@ -5,13 +5,63 @@ import static org.testng.Assert.fail;
 
 import java.util.HashMap;
 
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import pageObjects.CDW_ABA_DDA_Page;
+import pageObjects.EnrollPage;
 import reusableComponents.DB_Operations;
+import reusableComponents.Helper;
+import reusableComponents.ListenersImplementation;
 import reusableComponents.SQLQuery;
+import reusableComponents.reusableMethod;
+import testBase.ExtentFactory;
 import testBase.TestBase;
 
 public class CDWMicroDepositPageTest extends TestBase{
+	@BeforeClass
+	public void beforeClass(ITestContext context) {
+		System.out.println("******************************");
+		// logger.info("=>Starting testing on the CDW_ABA_DDA page.\n");
+		System.out.println("=>Starting testing on the CDW_ABA_DDA page.\n");
+		parentTest = ListenersImplementation.getReport().createTest("CDW ABA/DDA Intro Page Test");
+		chaildTest = parentTest.createNode("=>Pre-required Action To Reach CDW_ABA_DDA Page");
+		ExtentFactory.getInstance().setExtent(chaildTest);
+		System.out.println("INFO: Starting Complete PIV process.");
+		chaildTest1 = chaildTest.createNode("=>Complete PIV");
+		ExtentFactory.getInstance().setExtent(chaildTest1);
+		WelcomePageObject.clickGetStartButton();
+		EnrollPage.completePIV("Consumer_data", "Consumer_Validdetails", false);
+		reusableMethod.checkPartnerselectedPlasticindicater();
+		reusableMethod.checkPartnerselectedBankIntroPage();
+		System.out.println("INFO: Complete PIV process done.");
+		chaildTest1 = chaildTest.createNode("=>Waiting for CDW aba/DDA Page Appear..");
+
+		ExtentFactory.getInstance().setExtent(chaildTest1);
+		CDW_ABA_DDA_Page.WaitUntilABADDAPageDisplay();
+		System.out.println("INFO: Waiting for CDW_ABA_DDA Page to appear.");
+	}
+
+	@AfterClass
+	public void afterClass() {
+
+		System.out.println("\n=>The test on the CDW_ABA_DDA page has been completed.");
+		System.out.println("******************************");
+
+	}
+
+	@BeforeMethod
+	public void beforeMethod(ITestResult result) {
+		chaildTest = parentTest.createNode(result.getMethod().getMethodName());
+		ExtentFactory.getInstance().setExtent(chaildTest);
+		// logger.info(result.getMethod().getMethodName());
+		System.out.println(Helper.getcurrentDate() + " INFO: " + result.getMethod().getMethodName());
+	}
+
 
 	@Test
 	public void Test_HeaderLogo() {

@@ -19,6 +19,7 @@ import testBase.TestBase;
 import reusableComponents.DB_Operations;
 import reusableComponents.Helper;
 import reusableComponents.ListenersImplementation;
+import reusableComponents.Rerunautomationscript;
 import reusableComponents.SQLQuery;
 import testBase.DriverFactory;
 import testBase.ExtentFactory;
@@ -119,7 +120,7 @@ public class WelcomePageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test //(retryAnalyzer = Rerunautomationscript.class)
 	public void Test_WelcomePageHeader() {
 		try {
 			assertEqualsString_custom(WelcomePageObject.getHeaderText(), "Welcome", "Welcome Page Header");

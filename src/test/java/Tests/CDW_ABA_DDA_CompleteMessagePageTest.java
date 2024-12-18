@@ -34,7 +34,7 @@ public class CDW_ABA_DDA_CompleteMessagePageTest extends TestBase {
 		// logger.info("=>Starting testing on the CDW_ABA_DDA page.\n");
 		System.out.println("=>Starting testing on the CDW Pending page.\n");
 		parentTest = ListenersImplementation.getReport().createTest("CDW Pending Page Test");
-		chaildTest = parentTest.createNode("=>Pre-required Action To Reach CDW Pending Page");
+		chaildTest = parentTest.createNode("=>Pre-required Action To reach CDW Pending Page");
 		ExtentFactory.getInstance().setExtent(chaildTest);
 		System.out.println("INFO: Starting Complete PIV process.");
 		chaildTest1 = chaildTest.createNode("=>Complete PIV");
