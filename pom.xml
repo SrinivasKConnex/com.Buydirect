@@ -132,7 +132,7 @@
 	</dependencies>
 	<profiles>
 		<profile>
-			<id>RegressionTest</id>
+			<id>SmokeTest</id>
 			<build>
 				<pluginManagement>
 					<plugins>
