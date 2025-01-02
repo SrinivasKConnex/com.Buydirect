@@ -35,20 +35,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<systemPropertyVariables>
-						<log.directory>
-							${project.basedir}/Output/${maven.build.timestamp}/Logs/</log.directory>
-					</systemPropertyVariables>
-					<suiteXmlFiles>
-						<suiteXmlFile>ExecutableTest/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-				</configuration>
-			</plugin>
+		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>versions-maven-plugin</artifactId>
