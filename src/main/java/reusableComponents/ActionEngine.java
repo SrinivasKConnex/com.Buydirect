@@ -180,6 +180,7 @@ public class ActionEngine {
 				// Get the text of the state
 				String state = option.getText();
 				if (state.equalsIgnoreCase(Value)) {
+					@SuppressWarnings("deprecation")
 					String ss = option.getAttribute("value");
 					int num = Integer.parseInt(ss);
 					// Select the state from the dropdown
