@@ -1,8 +1,5 @@
 package testBase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.testng.ISuite;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;

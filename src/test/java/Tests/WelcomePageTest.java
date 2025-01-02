@@ -19,7 +19,6 @@ import testBase.TestBase;
 import reusableComponents.DB_Operations;
 import reusableComponents.Helper;
 import reusableComponents.ListenersImplementation;
-import reusableComponents.Rerunautomationscript;
 import reusableComponents.SQLQuery;
 import testBase.DriverFactory;
 import testBase.ExtentFactory;

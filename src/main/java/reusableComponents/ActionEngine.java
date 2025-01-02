@@ -371,7 +371,7 @@ public class ActionEngine {
 				String state = option.getText();
 				statelist.add(state);
 				ExtentFactory.getInstance().getExtent().log(Status.INFO,
-						"==> Text retried is: " + "<b>" + "state" + "</b>");
+						"==> Text retried is: " + "<b>" + state + "</b>");
 			}
 		} catch (Exception e) {
 			ExtentFactory.getInstance().getExtent().log(Status.FAIL,

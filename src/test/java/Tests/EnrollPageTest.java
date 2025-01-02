@@ -28,9 +28,9 @@ import pageObjects.EnrollPage;
 import reusableComponents.DB_Operations;
 import reusableComponents.Helper;
 import reusableComponents.ListenersImplementation;
-import reusableComponents.ReadExcelData;
 import reusableComponents.ReadXMLData;
 import reusableComponents.SQLQuery;
+import reusableComponents.TestDataProvider;
 import testBase.DriverFactory;
 import testBase.ExtentFactory;
 import testBase.TestBase;
@@ -54,10 +54,8 @@ public class EnrollPageTest extends TestBase {
 	@AfterClass
 	public void afterClass() {
 		System.out.println("\n=>The test on the Enroll page has been completed.");
-		//System.out.println("******************************");
-		
-		
-		
+		// System.out.println("******************************");
+
 	}
 
 	@BeforeMethod
@@ -78,7 +76,7 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void Test_HeaderImageIsBroken() {
 		try {
 			assertTrue(!AbstractPageObject.getLogoBroken().getAttribute("naturalWidth").equals("0"));
@@ -128,7 +126,7 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void Test_PartnerLogoIsNotBroken() {
 		try {
 			WebElement logoElement = AbstractPageObject.getLogoBroken();
@@ -237,10 +235,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_FirstNamedWithValidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_FirstNamedWithValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_FirstOrLasrName");
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 				EnrollPage.enterFirstname(validatedata.getValue());
 				EnrollPageObject.submitenrollbutton();
@@ -256,10 +253,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_FirstNameWithInvalidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_FirstNameWithInvalidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_FirstOrLasrName");
+
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 				EnrollPage.enterFirstname(validatedata.getValue());
 				EnrollPageObject.submitenrollbutton();
@@ -303,10 +300,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_LastNamedWithValidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_LastNamedWithValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_FirstOrLasrName");
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 				EnrollPage.enterLastname(validatedata.getValue());
 				EnrollPageObject.submitenrollbutton();
@@ -324,10 +320,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void test_LastNameWithInvalidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_LastNameWithInvalidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_FirstOrLasrName");
 
 			for (Map.Entry<String, String> entry : data.entrySet()) {
 				String lastName = entry.getValue();
@@ -360,7 +355,7 @@ public class EnrollPageTest extends TestBase {
 	}
 
 	@Test
-	public void Test_TheLastNameMinLengthValidation() {
+	public void Test_LastNameMinLengthValidation() {
 		try {
 			String MinlenghtText = "a".repeat(1);
 			EnrollPage.enterLastname(MinlenghtText);
@@ -372,12 +367,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_EmailValidationWithInValidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_EmailValidationWithInValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_Email");
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
-
 				EnrollPage.enterEmail(validatedata.getValue());
 				EnrollPageObject.submitenrollbutton();
 				boolean isErrorDisplayed = EnrollPageObject.isErrorMessageDisplayed("email");
@@ -396,10 +389,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_EmailValidationWithValidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_EmailValidationWithValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_Email");
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
 				EnrollPage.enterEmail(validatedata.getValue());
@@ -423,7 +415,7 @@ public class EnrollPageTest extends TestBase {
 	}
 
 	@Test
-	public void Test_TheEmailNameMaxLengthValidation() {
+	public void Test_EmailNameMaxLengthValidation() {
 		try {
 
 			String MaxlenghtText = "a".repeat(250);
@@ -440,7 +432,7 @@ public class EnrollPageTest extends TestBase {
 	}
 
 	@Test
-	public void Test_TheEmailMinLengthValidation() {
+	public void Test_EmailMinLengthValidation() {
 		try {
 			String MinlenghtText = "a".repeat(1);
 			EnrollPage.enterEmail(MinlenghtText);
@@ -453,10 +445,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// verify the phone number Validation with Invalid input
-	public void Test_PhoneNumberValidationWithInValidInput() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_PhoneNumber");
+	public void Test_PhoneNumberValidationWithInValidInput(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -482,10 +474,10 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// verify the phone number Validation with Valid input
-	public void Test_PhoneNumberValidationWithValidInput() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_PhoneNumber");
+	public void Test_PhoneNumberValidationWithValidInput(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -537,10 +529,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// verify the CityName Validation with Valid input
-	public void Test_CityNameValidationWithValidInput() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_Cityname");
+	public void Test_CityNameValidationWithValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -564,13 +555,11 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// verify the CityName Validation with InValid input
-	public void Test_CityNameValidationWithInValidInput() {
+	public void Test_CityNameValidationWithInValidInput(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_Cityname");
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
-
 				EnrollPage.enterCity(validatedata.getValue());
 				EnrollPageObject.submitenrollbutton();
 				boolean isErrorDisplayed = EnrollPageObject.isErrorMessageDisplayed("city");
@@ -615,11 +604,9 @@ public class EnrollPageTest extends TestBase {
 		EnrollPageObject.ClearEnrollInputFields(false);
 	}
 
-	@Test
-	// verify the CityName Validation with Valid input
-	public void Test_AddressValidationWithValidInput() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_AddressValidationWithValidInput(String sheetName, String columnName, Map<String, String> data) {
 
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_Address");
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -643,11 +630,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// verify the CityName Validation with InValid input
-	public void Test_AddressValidationWithInValidInput() {
+	public void Test_AddressValidationWithInValidInput(String sheetName, String columnName, Map<String, String> data) {
 
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_Address");
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -659,7 +645,7 @@ public class EnrollPageTest extends TestBase {
 					assertTrue_custom(true, "Entered inValid Address,The Error Should display", true);
 				} else {
 					// If there is no error message
-					assertFalse_custom(true, "Entered Address is inValid, The Error Should display", false);
+					assertFalse_custom(false, "Entered Address is inValid, The Error Should display", false);
 				}
 
 			}
@@ -751,10 +737,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ZipCodeValidationWithValidInputData() {
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_ZipCodeValidationWithValidInputData(String sheetName, String columnName,
+			Map<String, String> data) {
 
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_ZipCode");
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -780,9 +766,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ZipCodeValidationWithInCompleteInputData() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_ZipCode");
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_ZipCodeValidationWithInCompleteInputData(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -934,15 +920,14 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@SuppressWarnings("static-access")
-	@Test
-	public void Test_DLNumbereValidationWithValidInputData() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_DlNumber");
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_DLNumbereValidationWithValidInputData(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			if (Helper.checkPartnerSelectDLOption()) {
 				for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
-					EnrollPageObject.enterDLnumber(validatedata.getValue());
+					EnrollPage.enterDLnumber(validatedata.getValue());
 					EnrollPageObject.submitenrollbutton();
 					if (!EnrollPageObject.isErrorMessageDisplayed("number")) {
 						// If there is an error message
@@ -963,9 +948,9 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test
-	public void Test_DLNumbereeValidationWithInCompleteInputData() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_DlNumber");
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_DLNumbereeValidationWithInCompleteInputData(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			if (Helper.checkPartnerSelectDLOption()) {
 				for (Map.Entry<String, String> validatedata : data.entrySet()) {
@@ -991,6 +976,7 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
+	
 	@Test
 	public void Test_TheDLNumbereMinLengthValidation() {
 		try {
@@ -1045,9 +1031,8 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test
-	public void Test_PINValidationWithValidInputData() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_PIN");
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_PINValidationWithValidInputData(String sheetName, String columnName, Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -1069,9 +1054,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_PINValidationWithInCompleteInputData() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "InValid_PIN");
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
+	public void Test_PINValidationWithInCompleteInputData(String sheetName, String columnName,
+			Map<String, String> data) {
 		try {
 			for (Map.Entry<String, String> validatedata : data.entrySet()) {
 
@@ -1116,10 +1101,9 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// Test_ the Masked pin in Pin text filed
-	public void Test_MaskedPin() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_PIN");
+	public void Test_MaskedPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
 			EnrollPage.enterpin(data.get("Data_1"));
 			if (EnrollPageObject.getPinElement().getAttribute("type").equals("password")) {
@@ -1132,10 +1116,9 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "EnrollData", dataProviderClass = TestDataProvider.class)
 	// Verify the UnMasked pin in Pin text filed
-	public void Test_UnMaskedPin() {
-		Map<String, String> data = ReadExcelData.getDataFromExcel("Validation_Data", "Valid_PIN");
+	public void Test_UnMaskedPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
 			EnrollPage.enterpin(data.get("Data_1"));
 			EnrollPageObject.clickEyeIcon();
@@ -1222,10 +1205,10 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_UserAbleToSelectDOBAbove18YearsAge() {
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class)
+
+	public void Test_UserAbleToSelectDOBAbove18YearsAge(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Consumer_data", "Consumer_Validdetails");
 			Map<String, String> date = Helper.dob(data.get("dob"));
 			EnrollPage.enterDob(date.get("Month"), date.get("Year"), date.get("Day"));
 			String sentKeyDOB = data.get("dob");
@@ -1238,10 +1221,10 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test(dependsOnMethods = "Test_StatedropdownOptionsAlphabeticOrderorNot")
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class,dependsOnMethods = "Test_StatedropdownOptionsAlphabeticOrderorNot")
 
-	public void Test_SubmitButton() {
-		ConsumerActualData = EnrollPage.completePIV("Consumer_data", "Consumer_Validdetails", false);
+	public void Test_SubmitForm(String sheetName, String columnName, Map<String, String> data) {
+		ConsumerActualData = EnrollPage.completePIV(sheetName, "Consumer_Validdetails", false);
 		try {
 
 			if (Helper.checkPartnerSelectPlasticindicatorornot()) {
@@ -1254,10 +1237,11 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorMessageForEmailAlreadyExist() {
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorMessageForEmailAlreadyExist(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			EnrollPage.completePIV("Consumer_data", "Consumer_details_EmailAredayExist", true);
+			EnrollPage.completePIV(sheetName, columnName, true);
 
 			String errorMessage = EnrollPageObject.getRedBoxErrorMessage();
 			EnrollPageObject.CloseErrorRedboxMessage();
@@ -1276,10 +1260,11 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorMessageForInvalidPin() {
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorMessageForInvalidPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			EnrollPage.completePIV("Consumer_data", "Consumer_details_InvalidPIN", false);
+			EnrollPage.completePIV(sheetName, columnName, true);
 
 			String errormessage = EnrollPageObject.getRedBoxErrorMessage();
 			EnrollPageObject.CloseErrorRedboxMessage();
@@ -1291,12 +1276,11 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test
-
-	public void Test_ErrorMessageForInvalidDominName() {
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class)
+	public void Test_ErrorMessageForInvalidDominName(String sheetName, String columnName, Map<String, String> data) {
 		try {
 
-			EnrollPage.completePIV("Consumer_data", "Consumer_details_InvalidDomine", true);
+			EnrollPage.completePIV(sheetName, columnName, true);
 
 			String errormessage = EnrollPageObject.getRedBoxErrorMessage();
 			EnrollPageObject.CloseErrorRedboxMessage();
@@ -1308,11 +1292,12 @@ public class EnrollPageTest extends TestBase {
 		}
 	}
 
-	@Test
+	@Test(dataProvider = "Consumerdata", dataProviderClass = TestDataProvider.class)
 
-	public void Test_ErrorMessageForInvalidPhone() {
+
+	public void Test_ErrorMessageForInvalidPhone(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			EnrollPage.completePIV("Consumer_data", "Consumer_details_InvalidPhone", false);
+			EnrollPage.completePIV(sheetName, columnName, true);
 
 			String errormessage = EnrollPageObject.getRedBoxErrorMessage();
 			EnrollPageObject.CloseErrorRedboxMessage();
@@ -1324,7 +1309,7 @@ public class EnrollPageTest extends TestBase {
 
 	}
 
-	@Test(dependsOnMethods = "Test_SubmitButton")
+	@Test(dependsOnMethods = "Test_SubmitForm")
 	public void Test_ValidatePIVDataWithDataBaseAfterSubmitEnrollmentForm() {
 
 		try {

@@ -16,7 +16,7 @@ public class reusableMethod extends TestBase{
 	}
 	
 	public static void checkPartnerselectedPlasticindicater() {
-		if (helper.checkPartnerSelectPlasticindicatorornot()) {
+		if (Helper.checkPartnerSelectPlasticindicatorornot()) {
 			//waitElementToAppear_custom(PlasticIndicatorPageObject.getHeaderElement(), "wait for Plastic Page appear");
 			PlasticIndicatorPageObject.clickPlasticRequest();
 		}

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -109,11 +108,7 @@ public class Helper extends TestBase {
 	}
 
 	public static boolean isAlphabetical(List<String> stateNames) {
-		// Check if the list is empty or has only one element
-		if (stateNames == null || stateNames.size() <= 1) {
-			return true;
-		}
-
+	
 		// Check if each state name is in alphabetical order
 		for (int i = 1; i < stateNames.size(); i++) {
 			// Compare each pair of adjacent state names

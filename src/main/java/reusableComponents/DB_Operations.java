@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class DB_Operations {
     
     public static HashMap<String, String> getSqlResultInMap(String sql) {
-        String connectionUrl = "jdbc:sqlserver://bimservicesdb-qa.database.windows.net;databaseName=BimSys;user=bimx05dbqa;password=jVs4xpUsVd35eyr5;encrypt=true;trustServerCertificate=true";
+        String connectionUrl = PropertiesOperations.getPropertyValueByKey("DataBaseConnectionURL");
         HashMap<String, String> dataMap = new HashMap<>();
         Connection connection = null;
         Statement statement = null;
@@ -48,7 +48,7 @@ public class DB_Operations {
     }
 
     public static int executeUpdate(String sql) {
-        String connectionUrl = "jdbc:sqlserver://bimservicesdb-qa.database.windows.net;databaseName=BimSys;user=bimx05dbqa;password=jVs4xpUsVd35eyr5";
+        String connectionUrl = PropertiesOperations.getPropertyValueByKey("DataBaseConnectionURL");
         Connection connection = null;
         Statement statement = null;
         int rowsAffected = 0;

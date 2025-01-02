@@ -12,7 +12,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
 import dbModel.Consumer;
 import dbModel.Consumer.Address;
 import dbModel.Consumer.Contact;
@@ -25,8 +24,6 @@ import testBase.TestBase;
  * @author :Srinivas com.Buydirect-WEB
  */
 public class EnrollPage extends TestBase {
-
-
 
 	// Locators
 	private static By firstname = By.id("firstname");
@@ -216,21 +213,9 @@ public class EnrollPage extends TestBase {
 
 	}
 
-	/*
-	 * public void enterDob(String month, String year, String day) {
-	 * 
-	 * WebElement eyear = driver.findElement(selectyear); WebElement emonth =
-	 * driver.findElement(selectmonth); List<WebElement> eday =
-	 * driver.findElements(selectDay); click_custom(driver.findElement(dateofbirth),
-	 * "Clcik on Date of birth :"); enterDateOfBirth_custom(year, month, day, eyear,
-	 * emonth, eday, "Select Date Of birth:");
-	 * 
-	 * }
-	 */
-
 	public static void enterDob(String month, String year, String day) {
 		try {
-			click_custom(driver.findElement(dateofbirth), "Clcik on Date of birth :");
+			click_custom(driver.findElement(dateofbirth), "Clcik on Date of birth filed:");
 			selectDropDownByValue_custom(driver.findElement(selectyear), "Year:", year);
 			selectDropdownbyindex(driver.findElement(selectmonth), "Month:", month);
 			List<WebElement> days = driver.findElements(selectDay);
@@ -314,7 +299,7 @@ public class EnrollPage extends TestBase {
 		return getStateDropDownDefaultValue_cutom(driver.findElement(stateissued), "State Dropdown");
 	}
 
-	public static void enterDLnumber(String Dlnumber) {
+	public static  void enterDLnumber(String Dlnumber) {
 		clear_custom(driver.findElement(dlnumber), "Clear Last Dlnumber InputBox Data");
 		sendKeys_custom(driver.findElement(dlnumber), "Enter Dlnumber:", Dlnumber);
 	}
@@ -366,7 +351,7 @@ public class EnrollPage extends TestBase {
 		for (int i = 0; i < Error_id.size(); i++) {
 			id.add(Error_id.get(i).getAttribute("id"));
 
-		} // System.out.println(id);
+		}
 		return id;
 	}
 
@@ -558,62 +543,62 @@ public class EnrollPage extends TestBase {
 		Select ss = new Select(driver.findElement(SelectID));
 		ss.selectByIndex(0);
 	}
-
+	
 	public static Map<String, String> completePIV(String sheetname, String columnName, boolean email) {
 		Map<String, String> data = ReadExcelData.getDataFromExcel(sheetname, columnName);
 		Map<String, String> date = Helper.dob(data.get("dob"));
-		Map<String, String> ActualDate = new HashMap<>();
+		Map<String, String> ActualData = new HashMap<>();
 
 		enterFirstname(data.get("Fname"));
-		ActualDate.put("fname", getFirstName());
+		ActualData.put("fname", getFirstName());
 
 		enterLastname(data.get("Lname"));
-		ActualDate.put("lname", getLastName());
+		ActualData.put("lname", getLastName());
 
 		String emailAddress = email ? data.get("mail_address") : Helper.randomEmail();
 
 		enterEmail(emailAddress);
-		ActualDate.put("email", getEnterdemailValue());
+		ActualData.put("email", getEnterdemailValue());
 
 		enterPhonenumber(data.get("Phone_number"));
-		ActualDate.put("phone", getPhoneNumber());
+		ActualData.put("phone", getPhoneNumber());
 
 		enterAddress(data.get("Address1"));
-		ActualDate.put("address", getAddress());
+		ActualData.put("address", getAddress());
 
 		enterSuteNumber(data.get("address2"));
-		ActualDate.put("address2", getsuite());
+		ActualData.put("address2", getsuite());
 
 		enterCity(data.get("City"));
-		ActualDate.put("city", getCity());
+		ActualData.put("city", getCity());
 
 		selectstate(data.get("state"));
-		ActualDate.put("state", getstate());
+		ActualData.put("state", getstate());
 
 		enterZip(data.get("zip"));
-		ActualDate.put("zip", getZip());
+		ActualData.put("zip", getZip());
 
 		if (Helper.checkPartnerSelectDLOption()) {
 			selectID();
-			ActualDate.put("selectDl", getDLoption());
+			ActualData.put("selectDl", getDLoption());
 
 			selectDLIssuestate(data.get("Dl_state"));
-			ActualDate.put("dlstate", getdlstate());
+			ActualData.put("dlstate", getdlstate());
 
 			enterDLnumber(data.get("Dl_number"));
-			ActualDate.put("dlnumber", getdlNumber());
+			ActualData.put("dlnumber", getdlNumber());
 		}
 
 		enterDob(date.get("Month"), date.get("Year"), date.get("Day"));
-		ActualDate.put("dob", getDob());
+		ActualData.put("dob", getDob());
 
 		enterpin(data.get("pin"));
-		ActualDate.put("pin", getEnterdPinValue());
+		ActualData.put("pin", getEnterdPinValue());
 
 		EnrollPageObject.selecttearm();
 		EnrollPageObject.submitenrollbutton();
 
-		return ActualDate;
+		return ActualData;
 	}
 
 	public static void assertNamesMatch(Consumer expectedData, Map<String, String> ConsumerActualData) {

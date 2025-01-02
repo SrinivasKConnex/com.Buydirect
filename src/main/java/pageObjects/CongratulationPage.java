@@ -8,11 +8,20 @@ public class CongratulationPage extends TestBase {
 
 	By welcomePageHeader = By.id("headerConfirmation");
 
+	By sucssesMessage = By.xpath("//p[@id='dynamic-congrats-message']/child::span");
+
 	public WebElement waitUntilConfirmationPageDisplay() {
 		return driver.findElement(welcomePageHeader);
 	}
 
 	public String getConfirmationPageHeaderText() {
-		return driver.findElement(welcomePageHeader).getText();
+		
+		return getText_custom(driver.findElement(welcomePageHeader), "Confirmation header Message");
+
+	}
+
+	public String getConfirmationSucssesMessage() {
+		return getText_custom(driver.findElement(sucssesMessage), "Confirmation Sucsses Message");
+
 	}
 }

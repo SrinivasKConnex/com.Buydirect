@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
 import reusableComponents.DB_Operations;
 import reusableComponents.Helper;
 import reusableComponents.ListenersImplementation;
-import reusableComponents.ReadExcelData;
 import reusableComponents.SQLQuery;
+import reusableComponents.TestDataProvider;
 import testBase.ExtentFactory;
 import testBase.TestBase;
 
@@ -61,7 +61,7 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void Test_HeaderImageisBroken() {
 		try {
 			if (AbstractPageObject.getLogoBroken().getAttribute("naturalWidth").equals("0")) {
@@ -199,10 +199,10 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorforEmailDoesNotExist() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorforEmailDoesNotExist(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_1");
 			SignInpageObject.consumer_login(data.get("Consumer_email"), data.get("Consumer_pin"));
 			SignInpageObject.waitFor_ErrorMessageAppear();
 			// Validate Error Message
@@ -217,10 +217,10 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_MaskedPin() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_MaskedPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_6");
 			// Enter the Invalid Email Id
 			SignInpageObject.enterLoginEmail(data.get("Consumer_email"));
 			// Enter Valid pin
@@ -238,10 +238,10 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_UnMaskedPin() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_UnMaskedPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_6");
 			// Enter the Invalid Email Id
 			SignInpageObject.enterLoginEmail(data.get("Consumer_email"));
 			// Enter Valid pin
@@ -260,11 +260,11 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorforIncorrectPin() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorforIncorrectPin(String sheetName, String columnName, Map<String, String> data) {
 		try {
 
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_2");
 			SignInpageObject.consumer_login(data.get("Consumer_email"), data.get("Consumer_pin"));
 			SignInpageObject.waitFor_ErrorMessageAppear();
 			Assert.assertEquals(SignInpageObject.getinvalidErrrorText().getText(), "Please enter correct PIN.",
@@ -277,10 +277,10 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorForIncompletePin() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorForIncompletePin(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_3");
 			SignInpageObject.consumer_login(data.get("Consumer_email"), data.get("Consumer_pin"));
 			Assert.assertEquals(SignInpageObject.getRequiredPinErrorText(), "Your PIN must be 4 digits long", "Failed");
 		} catch (Exception e) {
@@ -289,10 +289,10 @@ public class SignInPageTest extends TestBase {
 		}
 	}
 
-	@Test
-	public void Test_ErrorForInValidEmail() {
+	@Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+
+	public void Test_ErrorForInValidEmail(String sheetName, String columnName, Map<String, String> data) {
 		try {
-			Map<String, String> data = ReadExcelData.getDataFromExcel("Login_crede", "Data_4");
 			SignInpageObject.consumer_login(data.get("Consumer_email"), data.get("Consumer_pin"));
 			Assert.assertEquals(SignInpageObject.getRequiredEmailErrorText(), "Invalid", "Failed");
 		} catch (Exception e) {

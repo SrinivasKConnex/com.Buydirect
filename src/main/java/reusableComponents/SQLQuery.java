@@ -4,6 +4,68 @@ import testBase.TestBase;
 
 public class SQLQuery extends TestBase {
 	
+	String partnerId=partnerid;
+	public static String getPartnerImageQuery(int partnerId) {
+        return "SELECT Partner_Image_URL FROM [dbo].[Partner_Image] WHERE Partner_ID = " 
+                + partnerId + " AND Partner_Image_Types_ID = 1";
+    }
+
+    public static String getTenderNameQuery(int partnerId) {
+        return "SELECT Tender_Name_Header FROM [dbo].[Partner_BuyDirect_Settings] WHERE Partner_ID = " 
+                + partnerId;
+    }
+
+    public static String getPartnerContactInfoQuery(int partnerId) {
+        return "SELECT Product_Name, Partner_Contact_Number " +
+               "FROM [dbo].[Partner_BuyDirect_Settings] AS ps " +
+               "INNER JOIN [dbo].[Partner_Profile] AS pp " +
+               "ON pp.Partner_ID = ps.Partner_ID " +
+               "WHERE ps.Partner_ID = " + partnerId;
+    }
+
+    // Example query with placeholder for parameter
+    public static String getDynamicQuery(String tableName, String columnName, String partnerId) {
+        return String.format("SELECT %s FROM [dbo].[%s] WHERE Partner_ID = %d", 
+                             columnName, tableName, partnerId);
+    }
+
+	public static String getSuccessMessage() {
+
+		String value = "SELECT Congratulations_Message FROM [dbo].[Partner_BuyDirect_Settings] WHERE Partner_ID ="
+				+ partnerid;
+		return value;
+
+	}
+	public static String getConsumerEnrollmentStatusQuery(String email) {
+
+		String value = "select Registration,PII_Complete,BA_Recieved,Consumer_ID from  [dbo].[Consumer_Enrollment_States] where Consumer_ID in (Select Consumer_ID from [dbo].[Consumer] where Consumer_Email ='"+email+"')";
+		return value;
+
+	}
+	public static String getConsumer_legacy_ID(String email) {
+
+		String value = "select Consumer_Legacy_ID from  [dbo].[Consumer] where Consumer_Email ='"+email+"'";
+		return value;
+
+	}
+	public static String getNotificationInsertDataQuery(String consumerlegacyID) {
+
+		String value = "select CategoryID from  [dbo].[NM_Notification] where ConsumerID in (Select Consumer_Legacy_ID from [dbo].[Consumer] where Consumer_Legacy_ID ="+consumerlegacyID+" and TypeID=1 and CategoryID=2)";
+		return value;
+
+	}
+    
+    
+    // Update queries can also be parameterized
+    public static String updatePlasticStatus(int partnerId, int status) {
+        return "UPDATE [dbo].[Partner_BuyDirect_Settings] SET Is_Plastics_Page_Displayed = " + status 
+               + " WHERE Partner_ID = " + partnerId;
+    }
+
+    // Example for parameterized method to avoid code duplication
+    public static String getQueryWithCondition(String tableName, String columnName, String condition) {
+        return String.format("SELECT %s FROM [dbo].[%s] WHERE %s", columnName, tableName, condition);
+    }
 	public static String logo_Query = "select Partner_Image_URL from [dbo].[Partner_Image] where Partner_ID="
 			+ partnerid + " and Partner_Image_Types_ID=1";
 

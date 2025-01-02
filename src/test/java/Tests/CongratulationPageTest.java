@@ -99,8 +99,7 @@ public class CongratulationPageTest extends TestBase {
 	@Test
 	public void Test_CongratulationText() {
 		try {
-			Assert.assertEquals(CongratulationPageObject.getConfirmationPageHeaderText(), "Confirmation");
-			chaildTest.info("Test_CongratulationText Completed");
+			Assert.assertEquals(CongratulationPageObject.getConfirmationPageHeaderText(), "Confirmation","Confirmation pafe Header text");
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Test_CongratulationText failed: " + e.getMessage());
@@ -117,7 +116,7 @@ public class CongratulationPageTest extends TestBase {
 		}
 	}
 
-	//@Test
+	// @Test
 	public void Test_HeaderImageIsBroken() {
 		try {
 			assertTrue(!AbstractPageObject.getLogoBroken().getAttribute("naturalWidth").equals("0"));
@@ -149,6 +148,52 @@ public class CongratulationPageTest extends TestBase {
 					"Test Footer Text with partner phone and name");
 		} catch (Exception e) {
 			fail("Failed to verify footer text: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void Test_SucssesMesssage() {
+		try {
+
+			assertEqualsString_custom(CongratulationPageObject.getConfirmationSucssesMessage(),
+					DB_Operations.getSqlResultInMap(SQLQuery.getSuccessMessage()).get("Congratulations_Message"),
+					"Sucsses Messsage");
+		} catch (Exception e) {
+			fail("Failed to verify partner tender name: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void Test_ConsumerEnrollmentStatusIndicatorInDatabase() {
+		try {
+			String email = loginData.get("email");
+			assertEqualsString_custom("1", DB_Operations
+					.getSqlResultInMap(SQLQuery.getConsumerEnrollmentStatusQuery(email)).get("Registration"),
+					"Registration Value Should be 1");
+			assertEqualsString_custom("1", DB_Operations
+					.getSqlResultInMap(SQLQuery.getConsumerEnrollmentStatusQuery(email)).get("PII_Complete"),
+					"PII_Complete Value Should be 1");
+			assertEqualsString_custom("1", DB_Operations
+					.getSqlResultInMap(SQLQuery.getConsumerEnrollmentStatusQuery(email)).get("BA_Recieved"),
+					"BA_Recieved Value Should be 1");
+		} catch (Exception e) {
+			fail("Some of the enrollemnt not insert into the Data base " + e.getMessage());
+		}
+	}
+
+	//@Test
+	public void Test_confirmationNotificationInsertionIntoDatabase() {
+		try {
+			String email = loginData.get("email");
+			String Consumer_Legacy_ID = DB_Operations.getSqlResultInMap(SQLQuery.getConsumer_legacy_ID(email))
+					.get("Consumer_Legacy_ID");
+
+			String expectedCategoryID = DB_Operations
+					.getSqlResultInMap(SQLQuery.getNotificationInsertDataQuery(Consumer_Legacy_ID)).get("CategoryID");
+			
+			assertEqualsString_custom("2", expectedCategoryID, "The consumer-selected SMS opt-out category should be set to 2, and the email notification should be inserted");
+		} catch (Exception e) {
+			fail("The notification was not inserted into the database, and the confirmation email was not sent to the consumer" + e.getMessage());
 		}
 	}
 
