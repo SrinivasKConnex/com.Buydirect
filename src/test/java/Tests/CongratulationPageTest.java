@@ -181,7 +181,7 @@ public class CongratulationPageTest extends TestBase {
 		}
 	}
 
-	//@Test
+	@Test
 	public void Test_confirmationNotificationInsertionIntoDatabase() {
 		try {
 			String email = loginData.get("email");
